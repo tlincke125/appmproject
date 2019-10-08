@@ -1,4 +1,4 @@
-function plotvector(start,endvec)
+function plotvector(start,endvec,color,label)
 %Arrowline 3-D vector plot.
 %   plotvector(start,endvec) plots a line vector with arrow pointing from point start
 %   to point endvec. The function can plot both 2D and 3D vector with arrow
@@ -26,18 +26,21 @@ function plotvector(start,endvec)
           x1 = endvec(1);
           y1 = endvec(2);
           z1 = endvec(3);
-          plot3([x0;x1],[y0;y1],[z0;z1]);   % Draw a line between start and endvec
-          
+          if label
+            plot3([x0;x1],[y0;y1],[z0;z1],'Color',color,'DisplayName', label);   % Draw a line between start and endvec
+          else
+              plot3([x0;x1],[y0;y1],[z0;z1],'Color',color,'HandleVisibility', 'off');
+          end
           p = endvec-start;
-          alpha = 0.1;  % Size of arrow head relative to the length of the vector
-          beta = 0.1;  % Width of the base of the arrow head relative to the length
+          alpha = 0.2;  % Size of arrow head relative to the length of the vector
+          beta = 0.2;  % Width of the base of the arrow head relative to the length
           
           hu = [x1-alpha*(p(1)+beta*(p(2)+eps)); x1; x1-alpha*(p(1)-beta*(p(2)+eps))];
           hv = [y1-alpha*(p(2)-beta*(p(1)+eps)); y1; y1-alpha*(p(2)+beta*(p(1)+eps))];
           hw = [z1-alpha*p(3);z1;z1-alpha*p(3)];
           
           hold on
-          plot3(hu(:),hv(:),hw(:))  % Plot arrow head
+          plot3(hu(:),hv(:),hw(:),'Color',color, 'HandleVisibility', 'off')  % Plot arrow head
           grid on
           xlabel('x')
           ylabel('y')
@@ -52,7 +55,7 @@ function plotvector(start,endvec)
           y0 = start(2);
           x1 = endvec(1);
           y1 = endvec(2);
-          plot([x0;x1],[y0;y1]);   % Draw a line between start and endvec
+          plot([x0;x1],[y0;y1],'Color',color, 'HandleVisibility', 'off');   % Draw a line between start and endvec
           
           p = endvec-start;
           alpha = 0.1;  % Size of arrow head relative to the length of the vector
@@ -62,7 +65,7 @@ function plotvector(start,endvec)
           hv = [y1-alpha*(p(2)-beta*(p(1)+eps)); y1; y1-alpha*(p(2)+beta*(p(1)+eps))];
           
           hold on
-          plot(hu(:),hv(:))  % Plot arrow head
+          plot(hu(:),hv(:),'Color',color,'HandleVisibility', 'off')  % Plot arrow head
           grid on
           xlabel('x')
           ylabel('y')
